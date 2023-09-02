@@ -1,1 +1,6 @@
-<paste log output from Kubernetes-mediated prediction, here>
+(.devops) ubuntu@ip-172-31-84-226:~/DevOps_Microservices/project-ml-microservice-kubernetes$ ./run_kubernetes.sh
+NAME           READY   STATUS    RESTARTS   AGE
+microproject   1/1     Running   0          7s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+Handling connection for 8000
