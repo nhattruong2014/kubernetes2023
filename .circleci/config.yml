@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # Use the same Docker base as the project
-      - image: 3.8-alpine3.17
+      - image: python:3.7.3-stretch
     working_directory: ~/repo
     steps:
       - checkout
