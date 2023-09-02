@@ -21,6 +21,7 @@ jobs:
             apk add --no-cache make
             pip install Click==8.0.4 Flask==2.1.3 itsdangerous==2.0.1 Jinja2==3.0.3 MarkupSafe==2.1.1 numpy==1.21.2 pandas==1.3.3 python-dateutil==2.8.2 pytz==2021.3 scikit-learn==0.24.2 scipy==1.7.3 six==1.16.0 Werkzeug==2.1.3 pylint==2.12.2
             pip install --upgrade Click Flask itsdangerous Jinja2 MarkupSafe numpy pandas python-dateutil pytz scikit-learn scipy six Werkzeug pylint
+            pip install --upgrade pip
             make install
             # Install hadolint
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
