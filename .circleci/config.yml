@@ -1,20 +1,56 @@
 version: 2
 jobs:
-  build:
+  lint:
     docker:
-      # Use the same Docker base as the project
       - image: python:3.7.3-stretch
     working_directory: ~/repo
     steps:
       - checkout
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run:
-          name: install dependencies
+          name: Create virtual env
+          command: |
+            make setup
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv ~/.devops
+            source ~/.devops/bin/activate
+            pip install -r requirements.txt
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run:
+          name: Run install
+          command: |
+            source ~/.devops/bin/activate
+            make install
+      - run:
+          name: Run test
+          command: |
+            source ~/.devops/bin/activate
+            make test
+      - run:
+          name: Run lint
+          command: |
+            source ~/.devops/bin/activate
+            make lint
+  build:
+    docker:
+      - image: python:3.7.3-stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+      - run:
+          name: Install dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -27,9 +63,15 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      # run lint!
       - run:
-          name: run lint
+          name: Run lint
           command: |
             . venv/bin/activate
             make lint
+workflows:
+  version: 2
+  default:
+    jobs:
+      - lint
+      - build:
+          requires: [lint]
