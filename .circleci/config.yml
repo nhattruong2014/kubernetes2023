@@ -77,8 +77,8 @@ jobs:
       - run:
           name: Add tag to docker and push docker to docker.io
           command: |
-            docker tag capstone nhattruongngn/capstone_v1.0
-            docker push nhattruongngn/capstone_v1.0
+            docker tag capstone nhattruongngn/capstone:v1.0
+            docker push nhattruongngn/capstone:v1.0
 workflows:
   version: 2
   default:
