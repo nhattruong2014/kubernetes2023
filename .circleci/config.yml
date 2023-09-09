@@ -79,6 +79,14 @@ jobs:
       - run:
           name: Build image from Dockerfile
           command: docker build --tag=capstone_v1.0.0 .
+      - run:
+          name: Add tag to docker
+          command: |
+            docker tag final nhattruongngn/capstone_v1.0.0
+      - run:
+          name: Push docker image to docker.io
+          command: |
+            docker push nhattruongngn/capstone_v1.0.0
 workflows:
   version: 2
   default:
