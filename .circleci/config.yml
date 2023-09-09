@@ -72,7 +72,7 @@ jobs:
           command: |
             . venv/bin/activate
             make lint
-      -run:
+      - run:
           name: Install docker
           command: |
             sudo apt update
