@@ -54,6 +54,13 @@ jobs:
             - v1-dependencies-{{ checksum "requirements.txt" }}
             - v1-dependencies-
       - run:
+          name: Install dependencies aws cli
+          command: |
+            sudo apt install -y tar gzip curl
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip -qq awscliv2.zip
+            sudo ./aws/install
+      - run:
           name: Install dependencies
           command: |
             python3 -m venv venv
