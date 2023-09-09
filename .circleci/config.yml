@@ -45,7 +45,7 @@ jobs:
             make lint
   build:
     docker:
-      - image: cimg/python:3.8.4
+      - image: circleci/node:13.8.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -53,6 +53,9 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "requirements.txt" }}
             - v1-dependencies-
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
       - run:
           name: Install dependencies aws cli
           command: |
@@ -64,15 +67,6 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-      - run:
-          name: Install docker
-          command: |
-            sudo apt update
-            sudo apt install apt-transport-https ca-certificates curl software-properties-common
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-            apt-cache policy docker-ce
-            sudo apt install docker-ce
       - run:
           name: Docker login
           command: |
