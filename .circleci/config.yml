@@ -72,6 +72,13 @@ jobs:
           command: |
             . venv/bin/activate
             make lint
+      - run:
+          name: Docker login
+          command: |
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run:
+          name: Build image from Dockerfile
+          command: docker build --tag=capstone_v1.0.0 .
 workflows:
   version: 2
   default:
