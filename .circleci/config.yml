@@ -79,6 +79,51 @@ jobs:
           command: |
             docker tag capstone nhattruongngn/capstone:v1.0
             docker push nhattruongngn/capstone:v1.0
+  deploy:
+    docker:
+      - image: circleci/python:3.7.3-stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt install -y tar gzip curl
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+      - run:
+          name: Install Kubernetes CLI
+          command: |
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/
+      - run:
+          name: Configure AWS CLI
+          command: |
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws configure set default.region $AWS_DEFAULT_REGION
+            aws configure set default.output json
+            aws eks update-kubeconfig --name Capstone-project-EKS
+            kubectl cluster-info
+            kubectl get all -n kube-system
+      - run:
+          name: Deployment configmap to EKS 
+          command: |
+            kubectl apply -f ./k8s/aws-auth-cm.yaml
+      - run:
+          name: Deploytment app to eks 
+          command: |
+            kubectl apply -f ./k8s/deploytment.yaml
+      - run:
+          name: Run test SVC
+          command: |
+            sleep 360
+            kubectl get all 
 workflows:
   version: 2
   default:
@@ -86,3 +131,5 @@ workflows:
       - lint
       - build:
           requires: [lint]
+      - deploy:
+          requires: [build]
