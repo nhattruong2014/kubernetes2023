@@ -108,7 +108,7 @@ jobs:
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws configure set default.region $AWS_DEFAULT_REGION
             aws configure set default.output json
-            aws eks update-kubeconfig --name Capstone-project-EKS
+            aws eks update-kubeconfig --name truong-capstone-eks-server
             kubectl cluster-info
             kubectl get all -n kube-system
       - run:
