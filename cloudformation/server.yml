@@ -46,11 +46,7 @@ Parameters:
         Type: String
         Default: capstone
 
-###########Config###########
-
 Resources:
-
-## Config Network
     VPC:
         Type: AWS::EC2::VPC
         Properties:
@@ -304,8 +300,7 @@ Resources:
         Properties:
             RouteTableId: !Ref PrivateRouteTable3
             SubnetId: !Ref PrivateSubnet3
-################ config EKS ####################
-###Role###
+
     ControlPlaneRole:
         Type: AWS::IAM::Role
         Properties:
@@ -368,8 +363,6 @@ Resources:
                     - !Ref PrivateSubnet2
                     - !Ref PrivateSubnet3
 
-################################# Config Worker Node #################################
-##role
     WorkerNodesRole:
         Type: AWS::IAM::Role
         Properties:
@@ -495,8 +488,6 @@ Resources:
                     /etc/eks/bootstrap.sh ${ControlPlane}
                     /opt/aws/bin/cfn-signal --exit-code $? --stack  ${AWS::StackName} --resource WorkerNodegroup --region ${AWS::Region}
 
-
-############################Output############################
 Outputs:
     VpcId:
         Value: !Ref VPC
