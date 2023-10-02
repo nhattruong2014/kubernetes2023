@@ -128,10 +128,6 @@ jobs:
           command: |
             sleep 360
             kubectl get all
-      - run:
-          name: Deploy App
-          command: |
-            python ~./app.py 
 workflows:
   version: 2
   default:
