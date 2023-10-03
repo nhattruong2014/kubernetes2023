@@ -16,9 +16,9 @@ spec:
         app: my-app
     spec:
       containers:
-      - image: nhattruongngn/capstone:v1.0
-        imagePullPolicy: Always
-        name: my-app-container
+        - image: nhattruongngn/capstone:v1.0
+          imagePullPolicy: Always
+          name: my-app-container
           ports:
             - containerPort: 80
 ---
