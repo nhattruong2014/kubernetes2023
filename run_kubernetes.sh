@@ -4,11 +4,11 @@
 
 # Step 1:
 # This is your Docker ID/path
-dockerpath="nhattruongngn/microproject:v1.0.0"
+dockerpath="nhattruongngn/capstone:v1.0"
 
 # Step 2
 # Run the Docker Hub container with kubernetes
-kubectl run microproject --image=nhattruongngn/microproject:v1.0.0 --port=80 --labels app=microproject
+kubectl run microproject --image=nhattruongngn/capstone:v1.0 --port=80 --labels app=microproject
 
 # Step 3:
 # List kubernetes pods

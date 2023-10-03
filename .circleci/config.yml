@@ -124,8 +124,10 @@ jobs:
           command: |
             kubectl apply -f ./kubernetes/deploytment.yaml
       - run:
-          name: Run test SVC
+          name: Run Test SVC
           command: |
+            sleep 480
+            kubectl get all
             sleep 360
             kubectl get all
 workflows:
