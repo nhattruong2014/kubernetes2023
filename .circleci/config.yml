@@ -128,8 +128,6 @@ jobs:
           command: |
             sleep 480
             kubectl get all
-            sleep 360
-            kubectl get all
 workflows:
   version: 2
   default:
